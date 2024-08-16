@@ -62,7 +62,7 @@ namespace EFCorePostgres.Services
         public string GenerateSymmetricJwtToken(Client user)
         {
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.key));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
 
@@ -132,7 +132,7 @@ namespace EFCorePostgres.Services
         }   
         public  ClaimsPrincipal GetSymmetricPrincipalFromExpiredToken(string token)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.key));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key));
 
             var tokenValidationParameters = new TokenValidationParameters
             {

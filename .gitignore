@@ -484,5 +484,4 @@ $RECYCLE.BIN/
 *.swp
 
 **/private_key.pem
-**/appsettings.json
 **/client_secret.json

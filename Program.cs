@@ -6,18 +6,21 @@ using EFCorePostgres.Services;
 using EFCorePostgres.Middleware;
 using EFCorePostgres.StartupConfigurations;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Collections;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Configuration.AddEnvironmentVariables();
 
+// Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContextPool<AppDbContext>
-                            (x => x.UseNpgsql(builder.Configuration.GetConnectionString("PostgresqlConstr")));
+                            (x => x.UseNpgsql(builder.Configuration.GetConnectionString("OFFLINE_POSTGRESQL")));
+
 
 builder.Services.AddIdentity<Client, Authority>()
     .AddRoles<Authority>()
@@ -59,3 +62,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
