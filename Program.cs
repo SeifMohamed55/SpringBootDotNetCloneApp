@@ -19,7 +19,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContextPool<AppDbContext>
-                            (x => x.UseNpgsql(builder.Configuration.GetConnectionString("OFFLINE_POSTGRESQL")));
+                            (x => x.UseNpgsql(builder.Configuration.GetConnectionString("ONLINE_POSTGRESQL")));
 
 
 builder.Services.AddIdentity<Client, Authority>()
