@@ -1,0 +1,6 @@
+@SpringBootCloneApp_HostAddress = http://localhost:5023
+
+GET {{SpringBootCloneApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
