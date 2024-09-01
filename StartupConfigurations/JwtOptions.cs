@@ -1,4 +1,4 @@
-﻿namespace EFCorePostgres.StartupConfigurations
+﻿namespace SpringBootCloneApp.StartupConfigurations
 {
     public class JwtOptions
     {

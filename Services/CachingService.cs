@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
-using EFCorePostgres.Models;
+using SpringBootCloneApp.Models;
 
-namespace EFCorePostgres.Services
+namespace SpringBootCloneApp.Services
 {
     public interface ICachingService
     {

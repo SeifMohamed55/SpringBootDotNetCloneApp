@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EFCorePostgres.Controllers.ResponseModels
+namespace SpringBootCloneApp.Controllers.ResponseModels
 {
     public class RefreshTokenResponse
     {

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 
-namespace EFCorePostgres.Models;
+namespace SpringBootCloneApp.Models;
 
 public partial class ClientAuthority : IdentityUserRole<long>
 {

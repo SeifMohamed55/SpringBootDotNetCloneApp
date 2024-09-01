@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EFCorePostgres.Models
+namespace SpringBootCloneApp.Models
 {
     [ComplexType]
     public class LatLng

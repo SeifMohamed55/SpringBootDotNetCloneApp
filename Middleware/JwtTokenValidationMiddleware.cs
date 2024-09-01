@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using EFCorePostgres.Attributes;
+using SpringBootCloneApp.Attributes;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
-namespace EFCorePostgres.Middleware
+namespace SpringBootCloneApp.Middleware
 {
     // kinda uselsee now for me
     public class JwtTokenValidationMiddleware

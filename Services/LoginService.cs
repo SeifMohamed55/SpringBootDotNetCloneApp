@@ -2,19 +2,19 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using EFCorePostgres.Controllers.APIResponses;
-using EFCorePostgres.Controllers.RequestModels;
-using EFCorePostgres.Controllers.ResponseModels;
-using EFCorePostgres.Models.Enums;
-using EFCorePostgres.Models;
-using EFCorePostgres.StartupConfigurations;
+using SpringBootCloneApp.Controllers.APIResponses;
+using SpringBootCloneApp.Controllers.RequestModels;
+using SpringBootCloneApp.Controllers.ResponseModels;
+using SpringBootCloneApp.Models.Enums;
+using SpringBootCloneApp.Models;
+using SpringBootCloneApp.StartupConfigurations;
 using System.Diagnostics;
 using Microsoft.Extensions.Options;
-using EFCorePostgres.Data;
+using SpringBootCloneApp.Data;
 using Azure;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace EFCorePostgres.Services
+namespace SpringBootCloneApp.Services
 {
     public interface ILoginService
     {
@@ -114,7 +114,7 @@ namespace EFCorePostgres.Services
             if (!signInResult.Succeeded)
                 return Results.BadRequest("Couldn't SignIn");
 
-            //httpContext.Response.Cookies.Delete("refreshToken");
+            // httpContext.Response.Cookies.Delete("refreshToken");
 
             var cookieOptions = new CookieOptions
             {

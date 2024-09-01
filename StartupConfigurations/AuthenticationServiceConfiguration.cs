@@ -1,17 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using EFCorePostgres.Services;
+using SpringBootCloneApp.Services;
 using System.Text;
-using static System.Net.WebRequestMethods;
 
-namespace EFCorePostgres.StartupConfigurations
+namespace SpringBootCloneApp.StartupConfigurations
 {
     public static class AuthenticationServiceConfiguration
     {
-        public static async Task<IServiceCollection> AddJwtGoogleAuthentication(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddJwtGoogleAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             //var signingKey = await new SigningIssuerCertficate().GetIssuerSigningKey(); // RSA
             var key = Encoding.UTF8.GetBytes(configuration["Jwt:Key"]);

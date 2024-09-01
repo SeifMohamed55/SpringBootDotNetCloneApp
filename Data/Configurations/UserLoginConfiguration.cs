@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EFCorePostgres.Data.Configurations
+namespace SpringBootCloneApp.Data.Configurations
 {
     public class UserLoginConfiguration : IEntityTypeConfiguration<IdentityUserLogin<long>>
     {

@@ -4,38 +4,33 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using EFCorePostgres.Models.DTOs;
-using EFCorePostgres.Data;
-using EFCorePostgres.Models;
+using SpringBootCloneApp.Models.DTOs;
+using SpringBootCloneApp.Data;
+using SpringBootCloneApp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
-using EFCorePostgres.Models.Enums;
+using SpringBootCloneApp.Models.Enums;
 using Microsoft.AspNetCore.Authentication.Google;
 using System.Security.Claims;
+using SpringBootCloneApp.Controllers.RequestModels;
 
-namespace EFCorePostgres.Controllers
+namespace SpringBootCloneApp.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class ClientsController : ControllerBase
+    [Route("api/[controller]")]
+    [Authorize]
+    public class ClientController : ControllerBase
     {
         private readonly AppDbContext _context;
-        public ClientsController(AppDbContext context)
+        private readonly UserManager<Client> _userManager;
+        public ClientController(AppDbContext context, UserManager<Client> userManager)
         {
             _context = context;
-        }
-
-        // GET: api/Clients
-        [HttpGet]
-        [Authorize(Roles = "ROLE_ADMIN")]
-        public async Task<ActionResult<IEnumerable<Client>>> GetClients()
-        {
-            return await _context.Clients.ToListAsync();
-        }
+            _userManager = userManager;
+        }       
 
         // GET: api/Clients/profile
         [HttpGet("profile")]
-        [Authorize]
         public async Task<ActionResult<ClientDTO>> GetClientInfo()
         {
             var strId = User.Claims.First(x=> x.Type == ClaimTypes.NameIdentifier).Value;
@@ -56,32 +51,37 @@ namespace EFCorePostgres.Controllers
         }
 
 
-        // PUT: api/Clients/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutClient(long id, ClientDTO incomingClient)
+        [HttpPut("")]
+        public async Task<IActionResult> UpdateClient(ClientDTO incomingClient)
         {
-            if (id != incomingClient.Id)
+            var strId = User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            long longId;
+
+
+            if (!long.TryParse(strId, out longId))
+                return BadRequest();
+
+            if (longId != incomingClient.Id)
             {
                 return BadRequest();
             }
 
-            var client = await _context.Clients.FindAsync(id);
+            var client = await _context.Clients.FindAsync(longId);
 
             if (client == null)
             {
                 return NotFound();
             }
 
-            client.UpdateClientFromDTO(incomingClient);
+            client.UpdateClientFromDTO(incomingClient); // no password
 
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException) when (!ClientExists(id))
+            catch (Exception)
             {
-                return NotFound();
+                return Conflict();
             }
 
             return NoContent();
@@ -89,74 +89,38 @@ namespace EFCorePostgres.Controllers
 
         // PUT: api/Clients/password/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("password/{id}")]
-        public async Task<IActionResult> UpdatePassword(long id, ClientDTO incomingClient)
+        [HttpPut("changePassword")]
+        public async Task<IActionResult> UpdatePassword(PasswordRequestModel model)
         {
-            if (id != incomingClient.Id)
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var strId = User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            long longId;
+
+
+            if (!long.TryParse(strId, out longId))
+                return BadRequest();
+
+            if (longId != model.Id)
             {
                 return BadRequest();
             }
 
-            var client = await _context.Clients.FindAsync(id);
+            var client = await _userManager.FindByIdAsync(longId.ToString());
 
             if (client == null)
             {
                 return NotFound();
             }
 
-            client.PasswordHash = incomingClient.Password;
+            var res = await _userManager.ChangePasswordAsync(client, model.OldPassword, model.NewPassword);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException) when (!ClientExists(id))
-            {
-                return NotFound();
-            }
+            if (!res.Succeeded)
+                return BadRequest(res.Errors);
 
-            return NoContent();
+            return Accepted();
         }
 
-        // POST: api/Clients
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Client>> PostClient(ClientDTO clientDto)
-        {
-            var client = new Client(clientDto);
-            _context.Clients.Add(client);
-            try
-            {
-                await _context.SaveChangesAsync();
-
-            }
-            catch (Exception ex)
-            {
-                return Problem(detail: ex.Message);
-            }
-
-            return CreatedAtAction("GetClient", new { id = client.Id }, client);
-        }
-
-        // DELETE: api/Clients/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteClient(long id)
-        {
-            var client = await _context.Clients.FindAsync(id);
-            if (client == null)
-            {
-                return NotFound();
-            }
-
-            _context.Clients.Remove(client);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool ClientExists(long id)
-        {
-            return _context.Clients.Any(e => e.Id == id);
-        }
     }
 }

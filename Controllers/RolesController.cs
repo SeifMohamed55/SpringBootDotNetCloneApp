@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using EFCorePostgres.Models;
-using EFCorePostgres.Models.Enums;
+using SpringBootCloneApp.Models;
+using SpringBootCloneApp.Models.Enums;
 
-namespace EFCorePostgres.Controllers
+namespace SpringBootCloneApp.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     [Authorize(Roles = "ROLE_ADMIN")]
     public class RolesController : ControllerBase
     {

@@ -6,23 +6,23 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using EFCorePostgres.Controllers.ResponseModels;
-using EFCorePostgres.Data;
-using EFCorePostgres.Models;
-using EFCorePostgres.Models.Enums;
-using EFCorePostgres.Services;
-using EFCorePostgres.StartupConfigurations;
+using SpringBootCloneApp.Controllers.ResponseModels;
+using SpringBootCloneApp.Data;
+using SpringBootCloneApp.Models;
+using SpringBootCloneApp.Models.Enums;
+using SpringBootCloneApp.Services;
+using SpringBootCloneApp.StartupConfigurations;
 using System.Diagnostics;
 using System.Security.Claims;
 using Google.Apis.Util;
 using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Http.HttpResults;
-using EFCorePostgres.Controllers.APIResponses;
+using SpringBootCloneApp.Controllers.APIResponses;
 
-namespace EFCorePostgres.Controllers
+namespace SpringBootCloneApp.Controllers
 {
     [ApiController]
-    [Route("/api/[controller]")]
+    [Route("api/[controller]")]
     public class FacebookController : ControllerBase
     {
         private readonly IJwtTokenService _tokenService;

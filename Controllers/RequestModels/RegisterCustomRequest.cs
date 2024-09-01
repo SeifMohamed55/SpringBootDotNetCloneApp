@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EFCorePostgres.Controllers.RequestModels
+namespace SpringBootCloneApp.Controllers.RequestModels
 {
     public class RegisterCustomRequest
     {

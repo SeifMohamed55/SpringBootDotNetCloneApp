@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EFCorePostgres.Models;
+namespace SpringBootCloneApp.Models;
 
 public partial class OrderItem
 {

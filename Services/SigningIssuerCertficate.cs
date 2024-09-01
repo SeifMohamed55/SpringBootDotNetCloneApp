@@ -2,7 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography;
 
-namespace EFCorePostgres.Services
+namespace SpringBootCloneApp.Services
 {
 
     public interface IRsaCertficate 

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace EFCorePostgres.Migrations
+namespace SpringBootCloneApp.Migrations
 {
     /// <inheritdoc />
     public partial class AddingPrimaryKeyToTagsAndOrigins : Migration

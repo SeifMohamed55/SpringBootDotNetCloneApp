@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using EFCorePostgres.Models;
+using SpringBootCloneApp.Models;
 
-namespace EFCorePostgres.Controllers
+namespace SpringBootCloneApp.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]

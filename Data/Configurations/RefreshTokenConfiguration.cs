@@ -2,14 +2,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using EFCorePostgres.Data;
-using EFCorePostgres.Models;
+using SpringBootCloneApp.Data;
+using SpringBootCloneApp.Models;
 using System;
 using System.Collections.Generic;
 
 #nullable disable
 
-namespace EFCorePostgres.Data.Configurations
+namespace SpringBootCloneApp.Data.Configurations
 {
     /*public partial class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
     {

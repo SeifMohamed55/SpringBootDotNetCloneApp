@@ -1,4 +1,4 @@
-﻿namespace EFCorePostgres.Models.Enums
+﻿namespace SpringBootCloneApp.Models.Enums
 {
     public enum OrderStatus
     {

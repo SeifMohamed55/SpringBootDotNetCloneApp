@@ -2,14 +2,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using EFCorePostgres.Data.Configurations;
-using EFCorePostgres.Models;
+using SpringBootCloneApp.Data.Configurations;
+using SpringBootCloneApp.Models;
 using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 #nullable enable
 
-namespace EFCorePostgres.Data;
+namespace SpringBootCloneApp.Data;
 
 public partial class AppDbContext : IdentityDbContext<Client, Authority, long, IdentityUserClaim<long>, ClientAuthority, IdentityUserLogin<long>, IdentityRoleClaim<long>, IdentityUserToken<long>>
 {

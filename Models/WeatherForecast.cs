@@ -1,4 +1,4 @@
-namespace EFCorePostgres.Models
+namespace SpringBootCloneApp.Models
 {
     public class WeatherForecast
     {

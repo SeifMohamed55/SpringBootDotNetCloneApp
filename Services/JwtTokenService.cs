@@ -3,14 +3,14 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Mono.TextTemplating;
-using EFCorePostgres.Models;
-using EFCorePostgres.StartupConfigurations;
+using SpringBootCloneApp.Models;
+using SpringBootCloneApp.StartupConfigurations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace EFCorePostgres.Services
+namespace SpringBootCloneApp.Services
 {
     public interface IJwtTokenService
     {
@@ -25,13 +25,11 @@ namespace EFCorePostgres.Services
     {
         private readonly JwtOptions _jwtOptions;
         private readonly IRsaCertficate _signingIssuerCertficate;
-        private readonly ICachingService _cacheService;
 
-        public JwtTokenService(IOptions<JwtOptions> options, IRsaCertficate signingIssuerCertficate, ICachingService cache)
+        public JwtTokenService(IOptions<JwtOptions> options, IRsaCertficate signingIssuerCertficate)
         {
             _jwtOptions = options.Value;
             _signingIssuerCertficate = signingIssuerCertficate;
-            _cacheService = cache;
         }
 
         public async Task<string?> GenerateAsymmetricJwtToken(Client user)
@@ -71,6 +69,7 @@ namespace EFCorePostgres.Services
                 new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
+
             foreach (var role in user.Authorities)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role.Name));

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EFCorePostgres.Models.Enums
+namespace SpringBootCloneApp.Models.Enums
 {
     public enum Role
     {

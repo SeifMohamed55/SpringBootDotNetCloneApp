@@ -1,4 +1,4 @@
-﻿namespace EFCorePostgres.Controllers.APIResponses
+﻿namespace SpringBootCloneApp.Controllers.APIResponses
 {
     public class AuthenticatedPayload
     {

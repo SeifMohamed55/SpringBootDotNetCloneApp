@@ -1,14 +1,33 @@
 using Microsoft.EntityFrameworkCore;
-using EFCorePostgres.Data;
+using SpringBootCloneApp.Data;
 using Microsoft.AspNetCore.Identity;
-using EFCorePostgres.Models;
-using EFCorePostgres.Services;
-using EFCorePostgres.Middleware;
-using EFCorePostgres.StartupConfigurations;
+using SpringBootCloneApp.Models;
+using SpringBootCloneApp.Services;
+using SpringBootCloneApp.Middleware;
+using SpringBootCloneApp.StartupConfigurations;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Collections;
+using Microsoft.AspNetCore.Mvc;
+
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                      policy.WithOrigins("https://webhook.site")
+                            .AllowAnyMethod() 
+                            .AllowAnyHeader();
+                      });
+});
+
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 
 builder.Configuration.AddEnvironmentVariables();
 
@@ -19,7 +38,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContextPool<AppDbContext>
-                            (x => x.UseNpgsql(builder.Configuration.GetConnectionString("ONLINE_POSTGRESQL")));
+                            (x => x.UseNpgsql(builder.Configuration.GetConnectionString("OFFLINE_POSTGRESQL")));
 
 
 builder.Services.AddIdentity<Client, Authority>()
@@ -33,16 +52,16 @@ builder.Services.AddSingleton<ICachingService, CachingService>();
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 
-await builder.Services.AddJwtGoogleAuthentication(builder.Configuration);
+builder.Services.AddJwtGoogleAuthentication(builder.Configuration);
 
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IRsaCertficate, SigningIssuerCertficate>();
 builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<IEmailingService, EmailingService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 
-// Use a cookie to temporarily store information about a user logging in with a third party login provider
 
 var app = builder.Build();
-
 
 
 // Configure the HTTP request pipeline.
@@ -54,6 +73,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(MyAllowSpecificOrigins);
+
 // app.UseJwtTokenValidationMiddleWare();
 
 app.UseAuthentication();
@@ -63,3 +84,11 @@ app.MapControllers();
 
 app.Run();
 
+
+
+/*var environmentVariables = Environment.GetEnvironmentVariables().Cast<DictionaryEntry>().OrderBy(x => (string)x.Key, StringComparer.OrdinalIgnoreCase);
+
+foreach (DictionaryEntry entry in environmentVariables)
+{
+    Console.WriteLine("{0} = {1}", entry.Key, entry.Value);
+}*/

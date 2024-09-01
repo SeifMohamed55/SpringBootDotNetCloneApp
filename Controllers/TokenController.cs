@@ -5,17 +5,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using NuGet.Common;
-using EFCorePostgres.Attributes;
-using EFCorePostgres.Controllers.RequestModels;
-using EFCorePostgres.Controllers.ResponseModels;
-using EFCorePostgres.Data;
-using EFCorePostgres.Models;
-using EFCorePostgres.Services;
-using EFCorePostgres.StartupConfigurations;
+using SpringBootCloneApp.Attributes;
+using SpringBootCloneApp.Controllers.RequestModels;
+using SpringBootCloneApp.Controllers.ResponseModels;
+using SpringBootCloneApp.Data;
+using SpringBootCloneApp.Models;
+using SpringBootCloneApp.Services;
+using SpringBootCloneApp.StartupConfigurations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 
-namespace EFCorePostgres.Controllers
+namespace SpringBootCloneApp.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

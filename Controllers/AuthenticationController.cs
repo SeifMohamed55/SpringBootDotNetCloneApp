@@ -1,28 +1,28 @@
-﻿namespace EFCorePostgres.Controllers
+﻿namespace SpringBootCloneApp.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Configuration;
     using System;
     using System.Threading.Tasks;
-    using EFCorePostgres.Models;
-    using EFCorePostgres.Services;
+    using SpringBootCloneApp.Models;
+    using SpringBootCloneApp.Services;
     using Microsoft.AspNetCore.Identity.Data;
-    using EFCorePostgres.Controllers.RequestModels;
-    using EFCorePostgres.Data;
-    using EFCorePostgres.Models.Enums;
-    using EFCorePostgres.Models.DTOs;
+    using SpringBootCloneApp.Controllers.RequestModels;
+    using SpringBootCloneApp.Data;
+    using SpringBootCloneApp.Models.Enums;
+    using SpringBootCloneApp.Models.DTOs;
     using NuGet.Packaging;
     using System.Security.Claims;
     using Microsoft.EntityFrameworkCore;
     using NuGet.Common;
-    using EFCorePostgres.Controllers.ResponseModels;
+    using SpringBootCloneApp.Controllers.ResponseModels;
     using Microsoft.AspNetCore.Authorization;
     using System.IdentityModel.Tokens.Jwt;
     using System.Diagnostics;
-    using EFCorePostgres.Attributes;
+    using SpringBootCloneApp.Attributes;
     using Microsoft.Extensions.Options;
-    using EFCorePostgres.StartupConfigurations;
+    using SpringBootCloneApp.StartupConfigurations;
     using Microsoft.AspNetCore.Authentication.Google;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authentication.Cookies;
@@ -35,16 +35,13 @@
     public class AuthenticationController : ControllerBase
     {
         private readonly UserManager<Client> _userManager;
-        private readonly AppDbContext _context;
         private readonly ILoginService _loginService;
         public AuthenticationController(
             UserManager<Client> userManager,
-            AppDbContext context,
             ILoginService loginService)
 
         {
             _userManager = userManager;
-            _context = context;
             _loginService = loginService;
         }
 
@@ -101,39 +98,7 @@
             return BadRequest(result.Errors);
         }
 
-        [HttpPost("registerAdmin")]
-        [Authorize(Roles = "ROLE_ADMIN")]
-        public async Task<IActionResult> RegisterAdmin(RegisterCustomRequest model)
-        {
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var user = new Client()
-            {
-                Email = model.Email,
-                Address = model.Address,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                UserName = model.Email,
-            };
-
-
-            var result = await _userManager.CreateAsync(user, model.Password);
-            if (result.Succeeded)
-            {
-                result = await _userManager.AddToRolesAsync(user,
-                                                new[] { Role.ROLE_USER.ToString(), Role.ROLE_ADMIN.ToString() });
-
-                if (result.Succeeded)
-                    return Ok(new { result = "User created successfully", user = new ClientDTO(user) });
-            }
-
-            return BadRequest(result.Errors);
-
-        }
+        
     }
 }
 
